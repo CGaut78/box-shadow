@@ -1,0 +1,34 @@
+
+composer create-project symfony/skeleton:"^5.4" nom_du_projet : créer un projet symfony en 
+version 5.4 (version LTS, voir symfony.com/releases)
+puis cd nom_du_projet
+et composer require webapp
+
+php -S localhost:8000 -t public : lancer un serveur local sur le port 8000 (pour arrêter le serveur, 
+faire CTRL + C)
+
+php bin/console doctrine:database:create   ->après config de la BDD en .env permet de créer la BDD
+
+php bin/console make:controller ->Créé un controller avec sa fonction index et une vue de cette fonction en twig classée dans un dossier du même nom que le controller 
+ 
+php bin/console make:entity ->Créé une table de BDD sous forme d'objet avec chaque propriété représentant un champs, gère les relations, types, longueur, 
+				      le fait que le champs soit nullable ou non. A l'issu: il génére l'entité ainsi que le repository correspondant à l'entité afin de pouvoir
+				      y accéder
+
+php bin/console make:form  ->créé un formulaire en liens direct avec une entité. une propriété de l'entité->un champs de formulaire 
+				     soit un champs de table en BDD donne un input (On peut ainsi ensuite utiliser les propriétés de form telles que: createForm(FormType::class, Entity)=>créé le formulaire
+																		      handleRequest($request)=>récupère les données du formulaire 
+																		      createView()=>créé une vue du formulaire pour la Twig
+
+php bin/console make:migration  ->génére un fichier de migration des entitées créées ou mofifiées qui n'est autre qu'une suite de requête d'insertion ou de modification
+
+php bin/console doctrine:migrations:migrate ->éxécute les migrations générées dans la base de donnée via l'ORM DOCTRINE
+
+php bin/console doctrine:schema:update --force ->éxécute une mise à jour de la base de donnée sans nécessiter de migration. Lecture instantanée des entités et requête éxécuté directement en BDD (Déconseillé)
+
+composer require orm-fixtures : installer le bundle des fixtures
+
+php bin/console make:fixtures nom_du_fichier : créer un fichier de fixtures
+
+php bin/console doctrine:fixtures:load : exécuter les fixtures (d:f:l)
+	
