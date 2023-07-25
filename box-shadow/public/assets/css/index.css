@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+
+
+.full {
+    margin-bottom: 25vh;
+}
+
+.title, .full, .hero, .cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+h1 {
+    font-family: 'Bungee';
+    font-size: 10vw;
+    transition: transform ease 300ms;
+}
+
+
+.overlay {
+    position: absolute;
+}
+
+.third {
+    color: var(--dark-blue);
+}
+
+.second {
+    color: var(--light-blue);
+}
+
+.first {
+    color: var(--easy-black);
+}
+
+.title:hover .third {
+    transform: translate(-20px, -20px);
+  }
+
+.title:hover .first {
+    transform: translate(20px, 20px);
+  }
+
+p {
+    font-size: x-large;
+}

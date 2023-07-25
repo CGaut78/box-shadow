@@ -1,2 +1,9 @@
+DONE :
 - créer les entités
+
+TODO :
 - isntaller Izi Admin
+- limiter les champs dans les entités (ex : numero_carte = string, mais chiffres uniquement, certaine longueur)
+- gérer inscription/déconnexion/connexion pour les trois profils
+- flesh out le home (cartes avec des petits logos sympas)
+- continuer cahier des charges

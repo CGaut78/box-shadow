@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto';
+}
+
+:root {
+    --dark-blue: #1E2761;
+    --light-blue:#408EC6;
+    --alt-color:#7A2048;
+    --easy-white:#DDD;
+    --easy-black:#222;
+  }
+
+body {
+    margin-top: 35vh;
+}
+
+.navbar {
+    height: 50px;
+    width: 100%;
+    background-color: var(--dark-blue);
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    color: var(--easy-white);
+    text-decoration: none;
+    background-color: transparent;
+    padding: 3px;
+    margin: 0 20px;
+    border-radius: 5px;
+}
+
+.logo {
+    font-family: 'Bungee';
+}
+
+.logo:hover {
+    color: var(--light-blue);
+}

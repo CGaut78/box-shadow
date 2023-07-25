@@ -1,0 +1,2 @@
+- Réellement besoin d'une table qui fait le lien entre élèves et formations ? Pas possible de juste faire un tableau des élèves qui suivent la 
+formation directement dans la formation elle-même ?
