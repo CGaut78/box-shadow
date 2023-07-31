@@ -1,0 +1,46 @@
+    providers:
+        eleve_provider:
+            entity:
+                class: App\Entity\Eleve
+                property: email
+
+        formateur_provider:
+            entity:
+                class: App\Entity\Formateur
+                property: email
+        all_users:
+            chain:
+                providers: ['eleve_provider', 'formateur_provider']
+
+    firewalls:
+
+        eleve_area:
+            pattern: ^/eleve
+            lazy: true
+            provider: eleve_provider
+            custom_authenticator: App\Security\EleveFormAuthenticator
+            logout:
+                path: app_logout
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
+        formateur_area:
+            pattern: ^/login/formateur
+            lazy: true
+            provider: formateur_provider
+            custom_authenticator: App\Security\FormateurFormAuthenticator
+            logout:
+                path: app_logout
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false        
+        main:
+            lazy: true
+            provider: eleve_provider

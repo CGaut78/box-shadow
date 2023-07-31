@@ -15,9 +15,7 @@
     --easy-black:#222;
   }
 
-body {
-    margin-top: 35vh;
-}
+
 
 .navbar {
     height: 50px;
@@ -28,6 +26,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 100;
 }
 
 a {
@@ -43,6 +42,31 @@ a {
     font-family: 'Bungee';
 }
 
-.logo:hover {
+a:hover {
     color: var(--light-blue);
 }
+
+
+.popup {
+    position: fixed;
+    display: none; /* Hidden by default */
+    width: 230px; /* Full width (cover the whole page) */
+    height: 80px; /* Full height (cover the whole page) */
+    top: 0;
+    left: 85%;
+    right: 0;
+    bottom: 0;
+    background-color: var(--dark-blue);
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    margin-top: 50px;
+  }
+
+  .popup ul li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+  }
+

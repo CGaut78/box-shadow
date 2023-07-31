@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Box-Shadow - Accueil{% endblock %}</title>
         <link rel="stylesheet" href="/assets/css/base.css">
+        <script src="/assets/js/base.js" defer></script>
         {% block stylesheets %}
         {% endblock %}
         {% block javascripts %}
@@ -13,12 +14,21 @@
         <div class="navbar">
             <div class="home">
                 <a href="{{ path('home') }}" class="logo">Box-Shadow</a>
+                <a href="">Nos formations</a>
             </div>
             <div class="links">
-                <a href="">Inscription</a>
-                <a href="">Connexion</a>            
+                <a href="{{ path('register') }}">Inscription</a>
+                <a class="dropdown" id="connect">Connexion</a>            
             </div>
         </div>
+        
+        <div class="popup">
+            <ul>
+                <li><a href="{{ path('formateur_login') }}">Connexion formateur</a></li>
+                <li><a href="{{ path('eleve_login') }}">Connexion élève</a></li>
+            </ul>
+        </div>
+
         {% block body %}{% endblock %}
     </body>
 </html>

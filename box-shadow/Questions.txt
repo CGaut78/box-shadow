@@ -1,2 +1,5 @@
-- Réellement besoin d'une table qui fait le lien entre élèves et formations ? Pas possible de juste faire un tableau des élèves qui suivent la 
-formation directement dans la formation elle-même ?
+
+- Comment gérer l'abonnement ? Via une table commande d'abonnement ? Possibilité d'abonnements différents, donnant accès à des contenus différents
+et/ou pour des durées différentes ? S'abonner donnerait un rôle particulier à l'utilisateur, qui aurait alors accès aux formations ? Comment
+générer donc une formation à chaque fois, avec le code unique, via une activation par l'utilisateur ? Doit être implémenté dès le début, ou
+alors possibilité de changer de business model en cours de route ?

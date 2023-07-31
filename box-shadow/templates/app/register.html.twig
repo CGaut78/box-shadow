@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/sinscrire.css">
+{% endblock %}
+
+{% block body %}
+<div class="register">
+    <h1>S'inscrire</h1>
+    <h2>Vous souhaitez vous inscrire :</h2>
+    <div class="second">
+            <ul><h3>En tant qu'élève</h3>
+                <li>Accédez à vos formations avec les codes envoyés</li>
+                <li>Consultez facilement vos cours</li>
+                <a href="{{ path('eleve_register') }}">S'inscrire comme élève</a>
+            </ul>
+            <ul><h3>En tant que formateur</h3>
+                <li>Mettez en place les formations, modules et cours que vous souhaitez</li>
+                <li>Communiquez avec vos élèves</li>
+                <a href="{{ path('formateur_register') }}">S'inscrire comme formateur</a>
+            </ul>
+    </div>
+</div>
+<p></p>
+
+
+
+{% endblock %}

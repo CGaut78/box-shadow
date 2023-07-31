@@ -1,0 +1,32 @@
+    providers:
+        eleve_provider:
+            entity:
+                class: App\Entity\Eleve
+                property: email
+        formateur_provider:
+            entity:
+                class: App\Entity\Formateur
+                property: email
+
+    firewalls:
+        eleve_area:
+            provider: eleve_provider
+            pattern: ^/eleve
+            form_login:
+                login_path: eleve_login
+                check_path: eleve_login
+            logout:
+                path: app_logout
+        formateur_area:
+            provider: formateur_provider
+            pattern: ^/formateur
+            form_login:
+                login_path: formateur_login
+                check_path: formateur_login
+            logout:
+                path: app_logout
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false        
+        main:
+            lazy: true
