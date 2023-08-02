@@ -2,22 +2,14 @@
 
 {% block title %}Connexion élève{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/login.css">
+{% endblock %}
+
 {% block body %}
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<form method="post">
+<form method="post" class="allform">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Connexion élève</h1>
@@ -31,7 +23,7 @@
     >
 
     <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+        Connexion
     </button>
 </form>
 {% endblock %}

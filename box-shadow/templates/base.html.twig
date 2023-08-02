@@ -17,8 +17,12 @@
                 <a href="">Nos formations</a>
             </div>
             <div class="links">
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('app_logout') }}">Déconnexion</a>            
+            {% else %}
                 <a href="{{ path('register') }}">Inscription</a>
-                <a class="dropdown" id="connect">Connexion</a>            
+                <a class="dropdown" id="connect">Connexion</a>              
+            {% endif %}
             </div>
         </div>
         
