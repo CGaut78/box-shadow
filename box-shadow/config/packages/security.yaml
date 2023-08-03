@@ -13,9 +13,13 @@ security:
             entity:
                 class: App\Entity\Formateur
                 property: email
+        admin_provider:
+            entity:
+                class: App\Entity\Admin
+                property: email
         all_users:
             chain:
-                providers: ['eleve_provider', 'formateur_provider']
+                providers: ['eleve_provider', 'formateur_provider', 'admin_provider']
 
     firewalls:
 
@@ -33,6 +37,14 @@ security:
             provider: formateur_provider
             context: link
             custom_authenticator: App\Security\FormateurFormAuthenticator
+            logout:
+                path: /logout
+        admin_area:
+            pattern: ^/admin
+            lazy: true
+            provider: admin_provider
+            context: link
+            custom_authenticator: App\Security\AdminFormAuthenticator
             logout:
                 path: /logout
         dev:
