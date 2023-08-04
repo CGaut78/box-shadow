@@ -24,7 +24,7 @@ security:
     firewalls:
 
         eleve_area:
-            pattern: ^/eleve
+            pattern: ^/login/eleve
             lazy: true
             provider: eleve_provider
             context: link
@@ -32,7 +32,7 @@ security:
             logout:
                 path: /logout
         formateur_area:
-            pattern: ^/formateur
+            pattern: ^/login/formateur
             lazy: true
             provider: formateur_provider
             context: link
@@ -40,7 +40,7 @@ security:
             logout:
                 path: /logout
         admin_area:
-            pattern: ^/admin
+            pattern: ^/admlog0112
             lazy: true
             provider: admin_provider
             context: link
@@ -66,8 +66,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/formateur, roles: ROLE_FORMATEUR }
+        - { path: ^/eleve, roles: ROLE_FORMATEUR }
 
 when@test:
     security:

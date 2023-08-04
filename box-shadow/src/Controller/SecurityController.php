@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/eleve/login', name: 'eleve_login')]
+    #[Route(path: '/login/eleve', name: 'eleve_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
@@ -24,7 +24,7 @@ class SecurityController extends AbstractController
         return $this->render('security/loginEleve.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    #[Route(path: '/formateur/login', name: 'formateur_login')]
+    #[Route(path: '/login/formateur', name: 'formateur_login')]
     public function loginFormateur(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
@@ -39,7 +39,7 @@ class SecurityController extends AbstractController
         return $this->render('security/loginFormateur.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    #[Route(path: '/admin/admlog0112', name: 'admin_login')]
+    #[Route(path: '/admlog0112', name: 'admin_login')]
     public function loginAdmin(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {

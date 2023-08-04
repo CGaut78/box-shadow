@@ -17,6 +17,9 @@
                 <a href="">Nos formations</a>
             </div>
             <div class="links">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin') }}">CRUD</a>
+            {% endif %}
             {% if is_granted('ROLE_USER') %}
                 <a href="{{ path('app_logout') }}">Déconnexion</a>            
             {% else %}

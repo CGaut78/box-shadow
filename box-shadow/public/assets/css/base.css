@@ -13,9 +13,12 @@
     --alt-color:#7A2048;
     --easy-white:#DDD;
     --easy-black:#222;
+    --background:#c9e5fa;
   }
 
-
+body {
+    background-color: var(--background);
+}
 
 .navbar {
     height: 50px;
