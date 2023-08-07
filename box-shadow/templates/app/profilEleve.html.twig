@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre profil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/index.css">
+{% endblock %}
+
+{% block body %}
+
+{% if suivre is not empty %}
+    {% set last = suivre|last %}
+
+    {{ last.idFormation.code }}
+    {% for su in suivre %}
+            {{ su.idFormation.code }}
+    {% endfor %}
+{% else %}
+    <h1>*bruits d'élève*</h1>    
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

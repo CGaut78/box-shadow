@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EleveRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -34,6 +36,14 @@ class Eleve implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
+
+    #[ORM\OneToMany(mappedBy: 'id_eleve', targetEntity: Suivre::class)]
+    private Collection $suivres;
+
+    public function __construct()
+    {
+        $this->suivres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +135,36 @@ class Eleve implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Suivre>
+     */
+    public function getSuivres(): Collection
+    {
+        return $this->suivres;
+    }
+
+    public function addSuivre(Suivre $suivre): static
+    {
+        if (!$this->suivres->contains($suivre)) {
+            $this->suivres->add($suivre);
+            $suivre->setIdEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSuivre(Suivre $suivre): static
+    {
+        if ($this->suivres->removeElement($suivre)) {
+            // set the owning side to null (unless already changed)
+            if ($suivre->getIdEleve() === $this) {
+                $suivre->setIdEleve(null);
+            }
+        }
 
         return $this;
     }

@@ -68,7 +68,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/formateur, roles: ROLE_FORMATEUR }
-        - { path: ^/eleve, roles: ROLE_FORMATEUR }
+        - { path: ^/eleve, roles: ROLE_ELEVE }
 
 when@test:
     security:

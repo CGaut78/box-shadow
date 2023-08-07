@@ -27,10 +27,14 @@ class Formation
     #[ORM\Column]
     private ?int $prix = null;
 
+    #[ORM\OneToMany(mappedBy: 'id_formation', targetEntity: Suivre::class)]
+    private Collection $suivres;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->suivres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,6 +122,36 @@ class Formation
     public function setPrix(int $prix): static
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Suivre>
+     */
+    public function getSuivres(): Collection
+    {
+        return $this->suivres;
+    }
+
+    public function addSuivre(Suivre $suivre): static
+    {
+        if (!$this->suivres->contains($suivre)) {
+            $this->suivres->add($suivre);
+            $suivre->setIdFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSuivre(Suivre $suivre): static
+    {
+        if ($this->suivres->removeElement($suivre)) {
+            // set the owning side to null (unless already changed)
+            if ($suivre->getIdFormation() === $this) {
+                $suivre->setIdFormation(null);
+            }
+        }
 
         return $this;
     }
