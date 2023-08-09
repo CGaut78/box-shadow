@@ -30,6 +30,9 @@ class Formation
     #[ORM\OneToMany(mappedBy: 'id_formation', targetEntity: Suivre::class)]
     private Collection $suivres;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
@@ -152,6 +155,18 @@ class Formation
                 $suivre->setIdFormation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }
