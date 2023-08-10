@@ -1,0 +1,54 @@
+{% extends 'app/profilEleve.html.twig' %}
+
+{% block title %}{{ modulePage.nom }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/profil.css">
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/js/profil.js" defer></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="navforma">
+    <a id="allformas">Parcourir mes formations</a>
+    <a id="allmodules">Modules de {{ formation.nom }}</a>
+    <a id="allcours">Cours du module {{ modulePage.nom }}</a>
+    <a href="">Rechercher un cours ...</a>
+</div>
+
+<div class="formations">
+    <h2>Liste des cours du module</h2>
+    <ul>
+        {% for cour in cours %}
+            <li>{{ cour.nom }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="showFormations">
+    <ul>
+    {% for formation in suivre %}
+        <li><a href="{{ path('vue_formation', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+    {% endfor %}        
+    </ul>
+</div>
+
+<div class="showModules">
+    <ul>
+    {% for mod in modules %}
+        <li><a href="{{ path('vue_module', {id: mod.id}) }}">{{ mod.nom }}</a></li>
+    {% endfor %}        
+    </ul>
+</div>
+
+<div class="showCours">
+    <ul>
+    {% for lesson in cours %}
+        <li><a href="{{ path('vue_cours', {id: lesson.id}) }}">{{ lesson.nom }}</a></li>
+    {% endfor %}        
+    </ul>
+</div>
+
+{% endblock %}

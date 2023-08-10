@@ -24,6 +24,9 @@ class Module
     #[ORM\OneToMany(mappedBy: 'id_mod', targetEntity: Cours::class)]
     private Collection $cours;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
     public function __construct()
     {
         $this->cours = new ArrayCollection();
@@ -84,6 +87,18 @@ class Module
                 $cour->setIdMod(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }

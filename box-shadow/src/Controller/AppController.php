@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\CoursRepository;
 use App\Repository\EleveRepository;
+use App\Repository\FormationRepository;
+use App\Repository\ModuleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +40,61 @@ class AppController extends AbstractController
     public function profilFormateur(): Response
     {
         return $this->render('app/profilFormateur.html.twig');
+    }
+
+    #[Route('/eleve/formation/{id}', name: 'vue_formation')]
+    public function vueFormation($id, EleveRepository $repoEleve, FormationRepository $repoFormation): Response
+    {
+        $userId = $this->getUser('id');
+        $eleve = $repoEleve->find($userId);
+        $suivre = $eleve->getSuivres();
+        $formation = $repoFormation->find($id);
+        $modules = $formation->getModules();
+        return $this->render('app/vueFormation.html.twig', [
+            'modules' => $modules,
+            'formation' => $formation,
+            'suivre' => $suivre,
+        ]);
+    }
+
+    #[Route('/eleve/module/{id}', name: 'vue_module')]
+    public function vueModule($id, EleveRepository $repoEleve, FormationRepository $repoFormation, ModuleRepository $repoModule): Response
+    {
+        $userId = $this->getUser('id');
+        $eleve = $repoEleve->find($userId);
+        $suivre = $eleve->getSuivres();
+        $modulePage = $repoModule->find($id);
+        $formation = $repoFormation->find($modulePage->getIdFor());
+        $modules = $formation->getModules();
+        $cours = $modulePage->getCours();
+        return $this->render('app/vueModule.html.twig', [
+            'modules' => $modules,
+            'formation' => $formation,
+            'suivre' => $suivre,
+            'modulePage' => $modulePage,
+            'cours' => $cours,
+        ]);
+    }
+
+    #[Route('/eleve/cours/{id}', name: 'vue_cours')]
+    public function vueCours($id, EleveRepository $repoEleve, FormationRepository $repoFormation, ModuleRepository $repoModule, CoursRepository $repoCours): Response
+    {
+        $coursPage = $repoCours->find($id);
+        $userId = $this->getUser('id');
+        $eleve = $repoEleve->find($userId);
+        $suivre = $eleve->getSuivres();
+        $modulePage = $repoModule->find($id);
+        $formation = $repoFormation->find($modulePage->getIdFor());
+        $modules = $formation->getModules();
+        $cours = $modulePage->getCours();
+        return $this->render('app/vueCours.html.twig', [
+            'modules' => $modules,
+            'formation' => $formation,
+            'suivre' => $suivre,
+            'modulePage' => $modulePage,
+            'cours' => $cours,
+            'coursPage' => $coursPage
+        ]);
     }
 
 }

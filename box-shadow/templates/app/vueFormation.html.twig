@@ -1,0 +1,55 @@
+{% extends 'app/profilEleve.html.twig' %}
+
+{% block title %}{{ formation.nom }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/profil.css">
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/js/profil.js" defer></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="navforma">
+    <a id="allformas">Parcourir mes formations</a>
+    <a id="allmodules">Modules de {{ formation.nom }}</a>
+    <a href="">Rechercher un cours ...</a>
+</div>
+
+<div class="formations">
+    <h2>Module actif</h2>
+    {% for actifs in modules %}
+        {% if actifs.statut == 'actif' %}
+            {{ actifs.nom }}        
+        {% endif %}
+    {% endfor %}
+    <h2>Autres modules</h2>
+        <ul>
+            {% for inactifs in modules %}
+                {% if inactifs.statut != 'actif' %}
+                    <li>{{ inactifs.nom }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+</div>
+
+<div class="showFormations">
+    <ul>
+    {% for formation in suivre %}
+        <li><a href="{{ path('vue_formation', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+    {% endfor %}        
+    </ul>
+</div>
+
+<div class="showModules">
+    <ul>
+    {% for mod in modules %}
+        <li><a href="{{ path('vue_module', {id: mod.id}) }}">{{ mod.nom }}</a></li>
+    {% endfor %}        
+    </ul>
+</div>
+
+{% endblock %}
+

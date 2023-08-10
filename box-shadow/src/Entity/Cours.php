@@ -19,6 +19,9 @@ class Cours
     #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?Module $id_mod = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Cours
     public function setIdMod(?Module $id_mod): static
     {
         $this->id_mod = $id_mod;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }

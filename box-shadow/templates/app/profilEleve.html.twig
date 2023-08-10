@@ -27,11 +27,10 @@
 
 <div class="show">
     <ul>
-    {% for su in suivre %}
-        <li><a href="">{{ su.idFormation.nom }}</a></li>
+    {% for formation in suivre %}
+        <li><a href="{{ path('vue_formation', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
     {% endfor %}        
     </ul>
-    
 </div>
 
 

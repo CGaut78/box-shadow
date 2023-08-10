@@ -25,7 +25,7 @@
     gap: 15px;
 }
 
-.show {
+.showFormations, .showModules, .showCours {
     display: none;
     position: fixed;
     width: 400px; /* Full width (cover the whole page) */
@@ -40,7 +40,7 @@
     margin-top: 50px;
   }
 
-  .show ul li {
+  .showFormations ul li, .showModules ul li, .showCours ul li {
     margin-top: 50%;
     display: flex;
     flex-direction: column;
@@ -48,4 +48,8 @@
     align-items: start;
     padding: 3px;
     gap: 30px;
+  }
+
+  .cours {
+    width: 80%;
   }
