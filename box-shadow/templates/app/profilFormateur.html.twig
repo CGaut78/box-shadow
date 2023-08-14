@@ -3,12 +3,37 @@
 {% block title %}Votre profil{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="/assets/css/index.css">
+    <link rel="stylesheet" href="/assets/css/profil.css">
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/js/profil.js" defer></script>
 {% endblock %}
 
 {% block body %}
+{% if commande is not empty %}
+    {% set last = commande|last %}
+<div class="navforma">
+    <a id="allformas">Parcourir mes formations</a>
+    <a href="">Rechercher un cours ...</a>
+</div>
 
-<h1>*Bruits de formateur*</h1>
+<div class="formations">
+    <h2>Formation la plus récente</h2>
+    {{ last.idFormation.nom }}
+</div>
+
+<div class="showFormations">
+    <ul>
+    {% for formation in commande %}
+        <li><a href="{{ path('vue_formation_formateur', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+    {% endfor %}        
+    </ul>
+</div>
+
+
+{% else %}
+    <h1>*Bruits de formateur*</h1>
+{% endif %}
 
 
 {% endblock %}

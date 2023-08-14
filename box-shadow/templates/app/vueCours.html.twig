@@ -25,25 +25,39 @@
 
 <div class="showFormations">
     <ul>
-    {% for formation in suivre %}
-        <li><a href="{{ path('vue_formation_eleve', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
-    {% endfor %}        
+    {% if is_granted('ROLE_ELEVE') %}
+        {% for formation in suivre %}
+            <li><a href="{{ path('vue_formation_eleve', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+        {% endfor %}       
+    {% elseif is_granted('ROLE_FORMATEUR') %}
+        {% for formation in commande %}
+            <li><a href="{{ path('vue_formation_formateur', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+        {% endfor %}
+    {% endif %} 
     </ul>
 </div>
 
 <div class="showModules">
     <ul>
     {% for mod in modules %}
-        <li><a href="{{ path('vue_module_eleve', {id: mod.id}) }}">{{ mod.nom }}</a></li>
-    {% endfor %}        
+        {% if is_granted('ROLE_ELEVE') %}
+            <li><a href="{{ path('vue_module_eleve', {id: mod.id}) }}">{{ mod.nom }}</a></li>
+        {% elseif is_granted('ROLE_FORMATEUR') %}
+            <li><a href="{{ path('vue_module_formateur', {id: mod.id}) }}">{{ mod.nom }}</a></li>              
+        {% endif %}
+    {% endfor %}    
     </ul>
 </div>
 
 <div class="showCours">
     <ul>
     {% for lesson in cours %}
-        <li><a href="{{ path('vue_cours_eleve', {id: lesson.id}) }}">{{ lesson.nom }}</a></li>
-    {% endfor %}       
+        {% if is_granted('ROLE_ELEVE') %}
+            <li><a href="{{ path('vue_cours_eleve', {id: lesson.id}) }}">{{ lesson.nom }}</a></li>
+        {% elseif is_granted('ROLE_FORMATEUR') %}
+            <li><a href="{{ path('vue_cours_formateur', {id: lesson.id}) }}">{{ lesson.nom }}</a></li>             
+        {% endif %}
+    {% endfor %}        
     </ul>
 </div>
 
