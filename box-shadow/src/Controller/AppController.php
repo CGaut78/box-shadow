@@ -42,7 +42,7 @@ class AppController extends AbstractController
         return $this->render('app/profilFormateur.html.twig');
     }
 
-    #[Route('/eleve/formation/{id}', name: 'vue_formation')]
+    #[Route('/eleve/formation/{id}', name: 'vue_formation_eleve')]
     public function vueFormation($id, EleveRepository $repoEleve, FormationRepository $repoFormation): Response
     {
         $userId = $this->getUser('id');
@@ -57,7 +57,7 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/eleve/module/{id}', name: 'vue_module')]
+    #[Route('/eleve/module/{id}', name: 'vue_module_eleve')]
     public function vueModule($id, EleveRepository $repoEleve, FormationRepository $repoFormation, ModuleRepository $repoModule): Response
     {
         $userId = $this->getUser('id');
@@ -76,8 +76,8 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/eleve/cours/{id}', name: 'vue_cours')]
-    public function vueCours($id, EleveRepository $repoEleve, FormationRepository $repoFormation, ModuleRepository $repoModule, CoursRepository $repoCours): Response
+    #[Route('/eleve/cours/{id}', name: 'vue_cours_eleve')]
+    public function vueCoursEleve($id, EleveRepository $repoEleve, FormationRepository $repoFormation, ModuleRepository $repoModule, CoursRepository $repoCours): Response
     {
         $coursPage = $repoCours->find($id);
         $userId = $this->getUser('id');
@@ -94,6 +94,15 @@ class AppController extends AbstractController
             'modulePage' => $modulePage,
             'cours' => $cours,
             'coursPage' => $coursPage
+        ]);
+    }
+
+    #[Route('/formations', name: 'formations')]
+    public function formations(FormationRepository $repo): Response
+    {
+        $formations = $repo->findAll();
+        return $this->render('app/formations.html.twig', [
+            'formations' => $formations,
         ]);
     }
 

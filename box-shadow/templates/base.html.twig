@@ -14,16 +14,23 @@
         <div class="navbar">
             <div class="home">
                 <a href="{{ path('home') }}" class="logo">Box-Shadow</a>
-                <a href="">Nos formations</a>
+                <a href="{{ path('formations') }}">Nos formations</a>
             </div>
             <div class="links">
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('admin') }}">CRUD</a>
             {% endif %}
             {% if is_granted('ROLE_USER') %}
+                {% if is_granted('ROLE_ELEVE') %}
+                    <a href="">S'inscrire à une formation</a>
+                    <a href="{{ path('profil_eleve') }}">Mon profil</a>
+                {% endif %}
+                {% if is_granted('ROLE_FORMATEUR') %}
+                    <a href="{{ path('profil_formateur') }}">Mon profil</a>
+                {% endif %}
                 <a href="{{ path('app_logout') }}">Déconnexion</a>            
             {% else %}
-                <a href="{{ path('register') }}">Inscription</a>
+                <a href="{{ path('register') }}">S'inscrire</a>
                 <a class="dropdown" id="connect">Connexion</a>              
             {% endif %}
             </div>

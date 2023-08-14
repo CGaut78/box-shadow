@@ -25,10 +25,10 @@
     {{ last.idFormation.nom }}
 </div>
 
-<div class="show">
+<div class="showFormations">
     <ul>
     {% for formation in suivre %}
-        <li><a href="{{ path('vue_formation', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+        <li><a href="{{ path('vue_formation_eleve', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
     {% endfor %}        
     </ul>
 </div>

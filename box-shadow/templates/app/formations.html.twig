@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos formations{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/formations.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="column">
+    <h1>Nos formations</h1>
+    <div class="formations">
+    {% for forma in formations %}
+        <div class="forma">
+            <h3>{{ forma.nom }}</h3>
+            <ul>
+                {% for module in forma.modules %}
+                    <li>{{ module.nom }}</li>
+                {% endfor %}
+            </ul>
+            <p>{{ forma.prix }}</p>
+            {% if is_granted('ROLE_FORMATEUR') %}
+                <a href="">Commander la formation</a>
+            {% else %}
+                <p class="message">Connectez-vous comme formateur pour commander</p>
+                <a href="{{ path('formateur_login') }}">Se connecter</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

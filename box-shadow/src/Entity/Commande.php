@@ -19,6 +19,9 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Formateur $id_formateur = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Commande
     public function setIdFormateur(?Formateur $id_formateur): static
     {
         $this->id_formateur = $id_formateur;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): static
+    {
+        $this->code = $code;
 
         return $this;
     }

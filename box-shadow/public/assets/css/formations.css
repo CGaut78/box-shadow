@@ -1,0 +1,54 @@
+h1 {
+    font-family: 'Roboto';
+}
+
+.column {
+    margin: auto;
+    margin-top: 100px;
+    min-height: 80vh;
+    background-color: var(--light-blue);
+    width: 75vw;
+    border-radius: 10px;
+}
+
+.column, .formations {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.formations {
+    height: 60%;
+    width: 80%;
+    gap : 20px;
+}
+
+.forma {
+    background-color: var(--background);
+    height: 30%;
+    width: 60%;
+    padding: 20px 50px;
+    border-radius: 5px;
+}
+
+.forma p {
+    font-weight: bold;
+    text-align: end;
+}
+
+.forma a {
+    background-color: var(--dark-blue);
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.message {
+    text-align: start;
+    color: var(--easy-black);
+}
+
+
+
+
+
