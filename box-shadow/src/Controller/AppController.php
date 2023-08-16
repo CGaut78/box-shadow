@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\Formateur;
 use App\Repository\CoursRepository;
 use App\Repository\EleveRepository;
+use App\Repository\ModuleRepository;
 use App\Repository\FormateurRepository;
 use App\Repository\FormationRepository;
-use App\Repository\ModuleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppController extends AbstractController
 {
@@ -151,6 +154,37 @@ class AppController extends AbstractController
         $formations = $repo->findAll();
         return $this->render('app/formations.html.twig', [
             'formations' => $formations,
+        ]);
+    }
+
+    #[Route('/formateur/commande/{id}', name: 'commande')]
+    public function commande($id, EntityManagerInterface $entityManager, FormationRepository $repo): Response
+    {
+        $formation = $repo->find($id);
+        $commande = new Commande();
+
+            $commande->setIdFormation($formation);
+            $commande->setIdFormateur($this->getUser('id'));
+            function generateCode() {
+                $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $randomString = '';
+             
+                for ($i = 0; $i < 8; $i++) {
+                    $index = rand(0, strlen($characters) - 1);
+                    $randomString .= $characters[$index];
+                }
+             
+                return $randomString;
+            }
+            $code = generateCode();
+            $commande->setCode($code);
+            $entityManager->persist($commande);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('profil_formateur');
+
+        return $this->render('app/commande.html.twig', [
+            'formation' => $formation,
         ]);
     }
 

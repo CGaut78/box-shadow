@@ -32,7 +32,11 @@
 
 
 {% else %}
-    <h1>*Bruits de formateur*</h1>
+    <div class="formations">
+        <h1>Bienvenue sur votre profil !</h1>
+        <p>Vous n'avez pour l'instant accès à aucune formation. N'hésitez pas à parcourir nos offres pour trouver celle qui vous convient !</p>
+        <a href="{{ path('formations') }}">Nos formations</a>
+    </div>
 {% endif %}
 
 

@@ -53,3 +53,9 @@
   .cours {
     width: 80%;
   }
+
+  .formations a {
+    background-color: var(--dark-blue);
+    padding: 5px;
+    border-radius: 5px;
+  }

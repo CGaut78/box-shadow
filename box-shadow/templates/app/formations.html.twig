@@ -21,7 +21,7 @@
             </ul>
             <p>{{ forma.prix }}</p>
             {% if is_granted('ROLE_FORMATEUR') %}
-                <a href="">Commander la formation</a>
+                <a href="{{ path('commande', {id: forma.id}) }}">Commander la formation</a>
             {% else %}
                 <p class="message">Connectez-vous comme formateur pour commander</p>
                 <a href="{{ path('formateur_login') }}">Se connecter</a>
