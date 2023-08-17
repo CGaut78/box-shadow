@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\Formateur;
+use App\Form\CardType;
+use App\Repository\CommandeRepository;
 use App\Repository\CoursRepository;
 use App\Repository\EleveRepository;
 use App\Repository\ModuleRepository;
@@ -54,7 +56,7 @@ class AppController extends AbstractController
 
     #[Route('/eleve/formation/{id}', name: 'vue_formation_eleve')]
     #[Route('/formateur/formation/{id}', name: 'vue_formation_formateur')]
-    public function vueFormation($id, EleveRepository $repoEleve, FormateurRepository $repoFormateur, FormationRepository $repoFormation): Response
+    public function vueFormation($id, EleveRepository $repoEleve, FormateurRepository $repoFormateur, FormationRepository $repoFormation, CommandeRepository $repoCommande): Response
     {
         $userId = $this->getUser('id');
         $formation = $repoFormation->find($id);
@@ -158,33 +160,56 @@ class AppController extends AbstractController
     }
 
     #[Route('/formateur/commande/{id}', name: 'commande')]
-    public function commande($id, EntityManagerInterface $entityManager, FormationRepository $repo): Response
+    public function commande($id, EntityManagerInterface $entityManager, FormationRepository $repoFormation, FormateurRepository $repoFormateur): Response
     {
-        $formation = $repo->find($id);
-        $commande = new Commande();
-
+        $userId = $this->getUser('id');
+        $formateur = $repoFormateur->find($userId);
+        if ($formateur->getCodeCarte() != null && $formateur->getNumeroCarte() != null && $formateur->getDateExpiration() != null){
+            $formation = $repoFormation->find($id);
+            $commande = new Commande();
             $commande->setIdFormation($formation);
             $commande->setIdFormateur($this->getUser('id'));
             function generateCode() {
                 $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 $randomString = '';
-             
                 for ($i = 0; $i < 8; $i++) {
                     $index = rand(0, strlen($characters) - 1);
                     $randomString .= $characters[$index];
                 }
-             
                 return $randomString;
-            }
+                }
             $code = generateCode();
             $commande->setCode($code);
             $entityManager->persist($commande);
             $entityManager->flush();
+            return $this->redirectToRoute('profil_formateur');            
+        } else {
+            return $this->redirectToRoute('carte');            
+        }      
+    }
 
-            return $this->redirectToRoute('profil_formateur');
+    #[Route('/formateur/register/success', name: 'success')]
+    public function success(): Response
+    {
+        return $this->render('app/success.html.twig');
+    }
 
-        return $this->render('app/commande.html.twig', [
-            'formation' => $formation,
+    #[Route('/formateur/carte', name: 'carte')]
+    public function carte(Request $request, EntityManagerInterface $entityManager, FormateurRepository $repo): Response
+    {
+        $userId = $this->getUser('id');
+        $formateur = $repo->find($userId);
+        $form = $this->createForm(CardType::class, $formateur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($formateur);
+            $entityManager->flush();
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('app/card.html.twig', [
+            'cardForm' => $form->createView(),
         ]);
     }
 

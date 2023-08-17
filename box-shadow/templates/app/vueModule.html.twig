@@ -12,10 +12,13 @@
 {% block body %}
 
 <div class="navforma">
-    <a id="allformas">Parcourir mes formations</a>
-    <a id="allmodules">Modules de {{ formation.nom }}</a>
     <a id="allcours">Cours du module {{ modulePage.nom }}</a>
+    <a id="allmodules">Modules de {{ formation.nom }}</a>
+    <a id="allformas">Parcourir mes formations</a>
     <a href="">Rechercher un cours ...</a>
+    {% if is_granted('ROLE_FORMATEUR') %}
+        <a href="{{ path('carte')}}">Mes coordonnées bancaires</a>
+    {% endif %}
 </div>
 
 <div class="formations">

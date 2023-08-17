@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription réussie{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/register.css">
+{% endblock %}
+
+{% block body %}
+
+{{ form_errors(cardForm) }}
+
+    {{ form_start(cardForm, {'attr': {'class': 'allform'}}) }}
+    <h1>Cordonnées bancaires</h1>
+    {{ form_row(cardForm.numero_carte) }}
+    {{ form_row(cardForm.date_expiration) }}
+    {{ form_row(cardForm.code_carte) }}
+        <button type="submit" class="btn">Enregistrer</button>
+    {{ form_end(cardForm, {'attr': {'class': 'allform'}}) }}
+
+{% endblock %}

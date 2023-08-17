@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription réussie{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/profil.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="formations">
+    <h2>Inscription réussie !</h2>
+    <p>Vous pouvez parcourir <a href="{{ path('formations')}}">nos formations</a> ou renseigner vos <a href="{{ path('carte')}}">coordonnées bancaires</a></p>
+</div>
+
+{% endblock %}
