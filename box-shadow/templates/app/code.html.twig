@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Code formation{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/register.css">
+{% endblock %}
+
+{% block body %}
+
+
+<form action="" class="allform">
+    <h2>Utiliser un code formation</h2>
+    <p>Veuillez entrer le code d'une formation pour avoir accès aux cours</p>
+    <label for="code">Code : </label>
+    <input type="text" name="code" id="code">
+    <input type="submit" value="Accéder à la formation" />
+</form>
+
+{% endblock %}

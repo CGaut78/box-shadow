@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\Formateur;
+use App\Entity\Suivre;
 use App\Form\CardType;
 use App\Repository\CommandeRepository;
 use App\Repository\CoursRepository;
@@ -11,7 +12,9 @@ use App\Repository\EleveRepository;
 use App\Repository\ModuleRepository;
 use App\Repository\FormateurRepository;
 use App\Repository\FormationRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -211,6 +214,29 @@ class AppController extends AbstractController
         return $this->render('app/card.html.twig', [
             'cardForm' => $form->createView(),
         ]);
+    }
+
+    #[Route('/eleve/code', name: 'code')]
+    public function code(Request $request, CommandeRepository $repoCommande, EntityManagerInterface $entityManager): Response
+    {
+        $userId = $this->getUser('id');
+        $code = $request->query->get('code');
+        $allCommandes = $repoCommande->findAll();
+        if($code != null){
+        foreach($allCommandes as $commande){
+            if($commande->getCode() == $code){
+                $suivre = new Suivre;
+                $suivre->setIdFormation($commande->getIdFormation());
+                $suivre->setIdEleve($userId);
+                $entityManager->persist($suivre);
+                $entityManager->flush();
+                return $this->redirectToRoute('profil_eleve');
+            } else {
+                return $this->redirectToRoute('home');
+            }
+        }
+        }
+        return $this->render('app/code.html.twig');
     }
 
 }

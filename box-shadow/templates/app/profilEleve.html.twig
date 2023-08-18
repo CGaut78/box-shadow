@@ -17,6 +17,7 @@
     {% set last = suivre|last %}
 <div class="navforma">
     <a id="allformas">Parcourir mes formations</a>
+    <a href="{{ path('code') }}">Utiliser un code formation</a>
     <a href="">Rechercher un cours ...</a>
 </div>
 
@@ -35,7 +36,11 @@
 
 
 {% else %}
-    <h1>*bruits d'élève*</h1>    
+    <div class="formations">
+        <h1>Bienvenue sur votre profil !</h1>
+        <p>Vous n'avez pour l'instant accès à aucune formation. N'hésitez pas à utiliser un code pour accéder aux cours !</p>
+        <a href="{{ path('code') }}">Utiliser un code</a>
+    </div>
 {% endif %}
 
 
