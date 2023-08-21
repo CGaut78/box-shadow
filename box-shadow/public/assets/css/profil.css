@@ -40,14 +40,17 @@
     margin-top: 50px;
   }
 
+.showFormations ul {
+  margin-top: 50%;
+}
+
   .showFormations ul li, .showModules ul li, .showCours ul li {
-    margin-top: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
     padding: 3px;
-    gap: 30px;
+    gap: 5px;
   }
 
   .cours {

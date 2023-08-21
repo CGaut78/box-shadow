@@ -51,7 +51,7 @@
     <ul>
     {% if is_granted('ROLE_ELEVE') %}
         {% for formation in suivre %}
-            <li><a href="{{ path('vue_formation_eleve', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+            <li><a href="{{ path('vue_formation_eleve', {id: formation.idCommande.idFormation.id}) }}">{{ formation.idCommande.idFormation.nom }} - {{ formation.idCommande.idFormateur.prenom }} {{ formation.idCommande.idFormateur.nom }}</a></li>
         {% endfor %}       
     {% elseif is_granted('ROLE_FORMATEUR') %}
         {% for formation in commande %}

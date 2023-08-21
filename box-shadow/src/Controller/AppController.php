@@ -12,9 +12,9 @@ use App\Repository\EleveRepository;
 use App\Repository\ModuleRepository;
 use App\Repository\FormateurRepository;
 use App\Repository\FormationRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Query\AST\WhereClause;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -154,16 +154,27 @@ class AppController extends AbstractController
     }
 
     #[Route('/formations', name: 'formations')]
-    public function formations(FormationRepository $repo): Response
+    public function formations(FormationRepository $repoFormation, FormateurRepository $repoFormateur): Response
     {
-        $formations = $repo->findAll();
+        $formations = $repoFormation->findAll();
+        $codesCommandes = [];
+        if($this->isGranted('ROLE_FORMATEUR')){
+            $userId = $this->getUser('id');
+            $formateur = $repoFormateur->find($userId);
+            $commandes = $formateur->getCommandes();
+            foreach($commandes as $order){
+                $code = $order->getIdFormation()->getId();
+                array_push($codesCommandes, $code);
+            }
+        }
         return $this->render('app/formations.html.twig', [
             'formations' => $formations,
+            'codesCommandes' => $codesCommandes,
         ]);
     }
 
     #[Route('/formateur/commande/{id}', name: 'commande')]
-    public function commande($id, EntityManagerInterface $entityManager, FormationRepository $repoFormation, FormateurRepository $repoFormateur): Response
+    public function commande($id, EntityManagerInterface $entityManager, FormationRepository $repoFormation, FormateurRepository $repoFormateur, CommandeRepository $repoCommande): Response
     {
         $userId = $this->getUser('id');
         $formateur = $repoFormateur->find($userId);
@@ -182,7 +193,18 @@ class AppController extends AbstractController
                 return $randomString;
                 }
             $code = generateCode();
-            $commande->setCode($code);
+            $allCommandes = $repoCommande->findAll();
+            $allCodes = [];
+            foreach($allCommandes as $order){
+                $orderCode = $order->getCode();
+                array_push($allCodes, $orderCode);
+            }
+            if(!in_array($code, $allCodes)){
+                $commande->setCode($code);
+            } else {
+                $code = generateCode();
+                $commande->setCode($code);
+            }
             $entityManager->persist($commande);
             $entityManager->flush();
             return $this->redirectToRoute('profil_formateur');            
@@ -217,24 +239,20 @@ class AppController extends AbstractController
     }
 
     #[Route('/eleve/code', name: 'code')]
-    public function code(Request $request, CommandeRepository $repoCommande, EntityManagerInterface $entityManager): Response
+    public function code(Request $request, CommandeRepository $repoCommande, EntityManagerInterface $entityManager, EleveRepository $repoEleve): Response
     {
         $userId = $this->getUser('id');
         $code = $request->query->get('code');
         $allCommandes = $repoCommande->findAll();
-        if($code != null){
         foreach($allCommandes as $commande){
             if($commande->getCode() == $code){
                 $suivre = new Suivre;
-                $suivre->setIdFormation($commande->getIdFormation());
+                $suivre->setIdCommande($commande);
                 $suivre->setIdEleve($userId);
                 $entityManager->persist($suivre);
                 $entityManager->flush();
                 return $this->redirectToRoute('profil_eleve');
-            } else {
-                return $this->redirectToRoute('home');
             }
-        }
         }
         return $this->render('app/code.html.twig');
     }

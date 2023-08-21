@@ -19,17 +19,21 @@ h1 {
 }
 
 .formations {
-    height: 60%;
+    min-height: 80%;
     width: 80%;
     gap : 20px;
 }
 
 .forma {
     background-color: var(--background);
-    height: 30%;
+    height: 200px;
     width: 60%;
     padding: 20px 50px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
 }
 
 .forma p {
@@ -47,6 +51,8 @@ h1 {
     text-align: start;
     color: var(--easy-black);
 }
+
+
 
 
 

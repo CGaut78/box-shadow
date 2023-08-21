@@ -40,9 +40,13 @@ class Eleve implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'id_eleve', targetEntity: Suivre::class)]
     private Collection $suivres;
 
+    #[ORM\OneToMany(mappedBy: 'id_eleve', targetEntity: Suivre::class)]
+    private Collection $suivres2;
+
     public function __construct()
     {
         $this->suivres = new ArrayCollection();
+        $this->suivres2 = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +167,36 @@ class Eleve implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($suivre->getIdEleve() === $this) {
                 $suivre->setIdEleve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Suivre>
+     */
+    public function getSuivres2(): Collection
+    {
+        return $this->suivres2;
+    }
+
+    public function addSuivres2(Suivre $suivres2): static
+    {
+        if (!$this->suivres2->contains($suivres2)) {
+            $this->suivres2->add($suivres2);
+            $suivres2->setIdEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSuivres2(Suivre $suivres2): static
+    {
+        if ($this->suivres2->removeElement($suivres2)) {
+            // set the owning side to null (unless already changed)
+            if ($suivres2->getIdEleve() === $this) {
+                $suivres2->setIdEleve(null);
             }
         }
 

@@ -23,13 +23,13 @@
 
 <div class="formations">
     <h2>Formation la plus récente</h2>
-    {{ last.idFormation.nom }}
+    {{ last.idCommande.idFormation.nom }} - {{ last.idCommande.idFormateur.prenom }} {{ last.idCommande.idFormateur.nom }}
 </div>
 
 <div class="showFormations">
     <ul>
     {% for formation in suivre %}
-        <li><a href="{{ path('vue_formation_eleve', {id: formation.idFormation.id}) }}">{{ formation.idFormation.nom }}</a></li>
+        <li><a href="{{ path('vue_formation_eleve', {id: formation.idCommande.idFormation.id}) }}">{{ formation.idCommande.idFormation.nom }} - {{ formation.idCommande.idFormateur.prenom }} {{ formation.idCommande.idFormateur.nom }}</a></li>
     {% endfor %}        
     </ul>
 </div>

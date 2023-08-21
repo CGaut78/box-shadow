@@ -14,11 +14,9 @@ class Suivre
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'suivres')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Formation $id_formation = null;
+    private ?Commande $id_commande = null;
 
-    #[ORM\ManyToOne(inversedBy: 'suivres')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'suivres2')]
     private ?Eleve $id_eleve = null;
 
     public function getId(): ?int
@@ -26,14 +24,14 @@ class Suivre
         return $this->id;
     }
 
-    public function getIdFormation(): ?Formation
+    public function getIdCommande(): ?Commande
     {
-        return $this->id_formation;
+        return $this->id_commande;
     }
 
-    public function setIdFormation(?Formation $id_formation): static
+    public function setIdCommande(?Commande $id_commande): static
     {
-        $this->id_formation = $id_formation;
+        $this->id_commande = $id_commande;
 
         return $this;
     }

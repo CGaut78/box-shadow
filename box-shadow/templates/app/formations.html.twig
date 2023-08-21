@@ -19,9 +19,13 @@
                     <li>{{ module.nom }}</li>
                 {% endfor %}
             </ul>
-            <p>{{ forma.prix }}</p>
+            <p>{{ forma.prix }} €</p>
             {% if is_granted('ROLE_FORMATEUR') %}
-                <a href="{{ path('commande', {id: forma.id}) }}">Commander la formation</a>
+                    {% if forma.id in codesCommandes %}
+                        <p>Vous possédez déjà cette formation</p>
+                    {% else %}
+                        <a href="{{ path('commande', {id: forma.id}) }}">Commander la formation</a>
+                    {% endif %}
             {% else %}
                 <p class="message">Connectez-vous comme formateur pour commander</p>
                 <a href="{{ path('formateur_login') }}">Se connecter</a>
