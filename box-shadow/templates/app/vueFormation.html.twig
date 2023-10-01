@@ -44,6 +44,14 @@
                 {% endif %}
             {% endfor %}
         </ul>
+    <h2>Liste des élèves</h2>
+        <ul>
+            {% for eleve in eleves %}
+                {% if eleve.idCommande.idFormation.id == formation.id %}
+                    <li>{{ eleve.idEleve.nom }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
 
 </div>
 

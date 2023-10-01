@@ -12,6 +12,7 @@ use App\Repository\EleveRepository;
 use App\Repository\ModuleRepository;
 use App\Repository\FormateurRepository;
 use App\Repository\FormationRepository;
+use App\Repository\SuivreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Query\AST\WhereClause;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppController extends AbstractController
 {
@@ -59,18 +61,22 @@ class AppController extends AbstractController
 
     #[Route('/eleve/formation/{id}', name: 'vue_formation_eleve')]
     #[Route('/formateur/formation/{id}', name: 'vue_formation_formateur')]
-    public function vueFormation($id, EleveRepository $repoEleve, FormateurRepository $repoFormateur, FormationRepository $repoFormation, CommandeRepository $repoCommande): Response
+    public function vueFormation($id, EleveRepository $repoEleve, FormateurRepository $repoFormateur, FormationRepository $repoFormation, CommandeRepository $repoCommande, SuivreRepository $repoSuivre): Response
     {
         $userId = $this->getUser('id');
         $formation = $repoFormation->find($id);
+        //l'id devrait être celui de la commande
         $modules = $formation->getModules();        
         if($this->isGranted('ROLE_FORMATEUR')){
             $formateur = $repoFormateur->find($userId);
             $commande = $formateur->getCommandes($id);
+            //trouver un moyen de récupérer les élèves suivant la formation actuelle
+            $eleves = $repoSuivre->findAll();
             return $this->render('app/vueFormation.html.twig', [
                 'modules' => $modules,
                 'formation' => $formation,
                 'commande' => $commande,
+                'eleves' => $eleves,
             ]);
         } elseif($this->isGranted('ROLE_ELEVE')){
             $eleve = $repoEleve->find($userId);
@@ -220,7 +226,7 @@ class AppController extends AbstractController
     }
 
     #[Route('/formateur/carte', name: 'carte')]
-    public function carte(Request $request, EntityManagerInterface $entityManager, FormateurRepository $repo): Response
+    public function carte(Request $request, EntityManagerInterface $entityManager, FormateurRepository $repo, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $userId = $this->getUser('id');
         $formateur = $repo->find($userId);
@@ -228,6 +234,18 @@ class AppController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $formateur->setNumeroCarte(
+                $userPasswordHasher->hashPassword(
+                    $formateur,
+                    $form->get('numero_carte')->getData()
+                )
+            );
+            $formateur->setCodeCarte(
+                $userPasswordHasher->hashPassword(
+                    $formateur,
+                    $form->get('code_carte')->getData()
+                )
+            );
             $entityManager->persist($formateur);
             $entityManager->flush();
             return $this->redirectToRoute('home');
@@ -235,6 +253,7 @@ class AppController extends AbstractController
 
         return $this->render('app/card.html.twig', [
             'cardForm' => $form->createView(),
+            'formateur' => $formateur,
         ]);
     }
 

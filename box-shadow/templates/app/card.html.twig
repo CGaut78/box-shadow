@@ -11,11 +11,16 @@
 {{ form_errors(cardForm) }}
 
     {{ form_start(cardForm, {'attr': {'class': 'allform'}}) }}
-    <h1>Cordonnées bancaires</h1>
-    {{ form_row(cardForm.numero_carte) }}
+    {% if formateur.numeroCarte != null %}
+        <h1>Modifier coordonnées bancaires</h1>
+        <h4>Vous avez déjà renseigné des cordonnées bancaires ; en remplissant de nouveau ce formulaire, vous les modifierez</h4>
+    {% else %}
+        <h1>Entrer coordonnées bancaires</h1>
+    {% endif %}    
+    {{ form_row(cardForm.numero_carte, {'value' : ''}) }}
     {{ form_row(cardForm.date_expiration) }}
-    {{ form_row(cardForm.code_carte) }}
-        <button type="submit" class="btn">Enregistrer</button>
+    {{ form_row(cardForm.code_carte, {'value' : ''}) }}
+        <button type="submit" class="btn">Modifier</button>
     {{ form_end(cardForm, {'attr': {'class': 'allform'}}) }}
 
 {% endblock %}
