@@ -49,6 +49,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
+    margin-top: 50px;
     padding: 3px;
     gap: 5px;
   }

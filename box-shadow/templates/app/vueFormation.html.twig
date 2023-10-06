@@ -24,7 +24,7 @@
     {% if is_granted('ROLE_FORMATEUR') %}
         <h2>
         {% for order in commande %}
-            {% if order.id == formation.id %}
+            {% if order.idFormation.id == formation.id %}
             Code : {{ order.code }}            
             {% endif %}
         {% endfor %}
@@ -44,14 +44,16 @@
                 {% endif %}
             {% endfor %}
         </ul>
+    {% if is_granted('ROLE_FORMATEUR') %}
     <h2>Liste des élèves</h2>
         <ul>
             {% for eleve in eleves %}
                 {% if eleve.idCommande.idFormation.id == formation.id %}
-                    <li>{{ eleve.idEleve.nom }}</li>
+                    <li>{{ eleve.idEleve.prenom }} {{ eleve.idEleve.nom }}</li>
                 {% endif %}
             {% endfor %}
         </ul>
+    {% endif %}
 
 </div>
 

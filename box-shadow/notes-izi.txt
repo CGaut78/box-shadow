@@ -4,7 +4,7 @@
     . ça ne fera des confettis que si on est connecté en tant qu'admin
 - make:admin:crud - Categorie (ici, pour l'exemple) - Enter - Enter : nous génère automatiquement, via Izi Admin, le crud pour les catégories
     . le "admin" dans les commandes implique qu'on utilise les outils d'Izi Admin
-- on répète l'étape pour générer des Cruds pour chacune de 0.  entités
+- on répète l'étape pour générer des Cruds pour chacune des entités
     . tout ce beau processsus présuppose quand même qu'on ait de base des entités (donc une BDD avec des tables) et un système de connexion/déconnexion avec au moins un profil admin
 - check Option1 dans le Dashboard Controller sur la fonction
     . commenter le return parent index initial 
