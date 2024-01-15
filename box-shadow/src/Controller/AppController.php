@@ -2,20 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Commande;
-use App\Entity\Formateur;
 use App\Entity\Suivre;
 use App\Form\CardType;
-use App\Repository\CommandeRepository;
+use App\Entity\Commande;
+use App\Entity\Formateur;
+use App\Entity\Formation;
+use App\Form\FormationType;
+use Doctrine\ORM\Mapping\Entity;
 use App\Repository\CoursRepository;
 use App\Repository\EleveRepository;
 use App\Repository\ModuleRepository;
+use App\Repository\SuivreRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\FormateurRepository;
 use App\Repository\FormationRepository;
-use App\Repository\SuivreRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Query\AST\WhereClause;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -274,6 +276,31 @@ class AppController extends AbstractController
             }
         }
         return $this->render('app/code.html.twig');
+    }
+
+    #[Route('/admin/creerformation', name: 'creerFormation')]
+    public function creerFormation(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $userId = $this->getUser('id');
+        $form = $this->createForm(FormationType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formation = new Formation();
+            $formation->setNom(
+                    $form->get('nom')->getData()
+            );
+            $formation->setPrix(
+                $form->get('prix')->getData()
+        );
+            $entityManager->persist($formation);
+            $entityManager->flush();
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('app/creerFormation.html.twig', [
+            'creerFormation' => $form->createView(),
+        ]);
     }
 
 }

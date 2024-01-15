@@ -62,7 +62,7 @@ h1 {
     min-height: 20rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     border-radius: 5px;
     box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.144);

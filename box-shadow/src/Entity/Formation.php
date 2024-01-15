@@ -122,27 +122,27 @@ class Formation
         return $this->suivres;
     }
 
-    public function addSuivre(Suivre $suivre): static
-    {
-        if (!$this->suivres->contains($suivre)) {
-            $this->suivres->add($suivre);
-            $suivre->setIdFormation($this);
-        }
+    // public function addSuivre(Suivre $suivre): static
+    // {
+    //     if (!$this->suivres->contains($suivre)) {
+    //         $this->suivres->add($suivre);
+    //         $suivre->setIdFormation($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeSuivre(Suivre $suivre): static
-    {
-        if ($this->suivres->removeElement($suivre)) {
-            // set the owning side to null (unless already changed)
-            if ($suivre->getIdFormation() === $this) {
-                $suivre->setIdFormation(null);
-            }
-        }
+    // public function removeSuivre(Suivre $suivre): static
+    // {
+    //     if ($this->suivres->removeElement($suivre)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($suivre->getIdFormation() === $this) {
+    //             $suivre->setIdFormation(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getNom(): ?string
     {

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer formation{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/css/register.css">
+{% endblock %}
+
+{% block body %}
+
+{{ form_errors(creerFormation) }}
+
+    {{ form_start(creerFormation, {'attr': {'class': 'allform'}}) }}
+    <h1>Nouvelle formation</h1>
+    {{ form_row(creerFormation.nom) }}
+    {{ form_row(creerFormation.prix) }}
+        <button type="submit" class="btn">Créer la formation</button>
+    {{ form_end(creerFormation, {'attr': {'class': 'allform'}}) }}
+
+{% endblock %}
